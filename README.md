@@ -1,3 +1,6 @@
+## Introduction to QuickBuy
+# Quick Buy is an e-commerce website with a wide range of products, competitive pricing, and user-friendly interface designed to offer a seamless shopping experience for customers.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
