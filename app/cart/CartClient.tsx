@@ -3,10 +3,10 @@
 import { useCart } from "@/hooks/useCart";
 import Link from "next/link";
 import { MdArrowBack } from "react-icons/md";
-import Heading from "../components/products/Heading";
 import Button from "@/app/components/Button";
 import ItemContent from "./ItemContent";
 import { formatPrice } from "@/utils/formatPrice";
+import Heading from "../components/Heading";
 
 
 const CartClient = () => {

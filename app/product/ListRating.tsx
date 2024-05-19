@@ -1,9 +1,9 @@
 "use client"
 
 import Rating from "@mui/material/Rating/Rating";
-import Heading from "../components/products/Heading";
+import Heading from "../components/Heading";
 import moment from "moment";
-import Avatar from "../components/products/Avatar";
+import Avatar from "../components/Avatar";
 
 interface ListRatingProps {
     product: any
