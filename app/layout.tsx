@@ -5,6 +5,7 @@ import "./globals.css";
 import Navbar from "./components/nav/Navbar";
 import Footer from "./components/footer/Footer";
 import CartProvider from "@/provider/CartProvider";
+import { Toaster } from "react-hot-toast";
 
 //set it to latin and the weight for the font
 //call the poppins in the className for body to start use 
@@ -27,6 +28,12 @@ export default function RootLayout({
       <body className= {`${poppins.className}
        text-slate-700`
        }>
+        <Toaster toastOptions={{
+          style: {
+            background: 'rgb(51 65 85)',
+            color: "#fff"
+          }
+        }}/>
         <CartProvider>
           <div className="flex flex-col min-h-screen">
             <Navbar />

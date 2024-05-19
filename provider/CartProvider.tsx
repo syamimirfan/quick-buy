@@ -6,15 +6,13 @@ interface CartProviderProps {
     children: React.ReactNode
 }
 
-const CartProvider:React.FC<CartProviderProps> = (
+const CartProvider: React.FC<CartProviderProps> = (
     {children}
 ) => {
     return ( 
-        <div className="">
              <CartContextProvider> 
                 {children}
             </CartContextProvider>
-        </div>
      );
 }
  

@@ -6,10 +6,12 @@ import SetColor from "@/app/components/products/SetColor";
 import SetQuantity from "@/app/components/products/SetQuantity";
 import { useCart } from "@/hooks/useCart";
 import Rating from "@mui/material/Rating";
-import { useCallback, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+import { MdCheckCircle } from "react-icons/md";
 
 interface ProductDetailsProps{
-    product: any
+    product: any;
 }
 
 //make some horizontal line
@@ -34,9 +36,7 @@ export type SelectedImgType = {
     image: string
 }
 
-const ProductDetails:React.FC<ProductDetailsProps> = ( { product } ) => {
-
-    const {cartTotalQty} = useCart()
+const ProductDetails: React.FC<ProductDetailsProps> = ( { product } ) => {
 
     const [cartProduct, setCartProduct] = useState<CartProductType>({
         id: product.id,
@@ -48,8 +48,31 @@ const ProductDetails:React.FC<ProductDetailsProps> = ( { product } ) => {
         qty: 1,
         price: product.price
     })
-    
 
+    const {handleAddProductToCart, cartProducts} = useCart()
+
+    const [isProductInCart, setIsProductInCart] = useState(false)
+
+    const {cartTotalQty} = useCart()
+
+
+    const router = useRouter();
+    
+    useEffect(() => {
+        setIsProductInCart(false)
+
+        if(cartProducts) {
+            const existingIndex = cartProducts.findIndex((item) => item.id === product.id)
+
+            if(existingIndex > -1){
+                setIsProductInCart(true)
+            }
+        }
+
+    }, [cartProducts, product.id])
+
+    console.log(cartProducts);
+    
     const productRating = product.reviews.reduce((acc : number, item: any) => item.rating + acc, 0) / product.reviews.length
 
     const handleColorSelect = useCallback((value: SelectedImgType) => {
@@ -58,7 +81,6 @@ const ProductDetails:React.FC<ProductDetailsProps> = ( { product } ) => {
         })
     },
     [])
-    //cartProduct.selectedImg
     const handleQtyIncrease = useCallback(() => {
         
         if(cartProduct.qty === 99) {
@@ -103,6 +125,17 @@ const ProductDetails:React.FC<ProductDetailsProps> = ( { product } ) => {
                  {product.inStock ? "In stock" : "Out of stock"}
                </div>
                <Horizontal />
+               {isProductInCart ? (<>
+                <p className="mb-2 text-slate-500 flex items-center gap-1">
+                    <MdCheckCircle className="text-green-500" size={20}/>
+                    <span>Product added to cart</span>
+                </p>
+                <div className="lg:w-[300px]">
+                    <Button label="View Cart" border outline onClick={() => {
+                        router.push('/cart')
+                    }}/>
+                </div>
+               </>) : (<>       
                <SetColor 
                 cartProduct={cartProduct}
                 images={product.images}
@@ -112,10 +145,12 @@ const ProductDetails:React.FC<ProductDetailsProps> = ( { product } ) => {
                <SetQuantity cartProduct={cartProduct} handleQtyIncrease={handleQtyIncrease} 
                 handleQtyDecrease={handleQtyDecrease}/>
                <Horizontal />
-               <div className="max-w-[300px]">
-               <Button label="Add to Cart"
-                onClick={() => {}}/>
+               <div className="lg:w-[300px]">
+               <Button          
+                label="Add to Cart"
+                onClick={() => handleAddProductToCart(cartProduct)}/>
                </div>
+               </>)}
             </div>
         </div>
      );

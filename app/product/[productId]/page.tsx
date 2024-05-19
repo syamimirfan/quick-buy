@@ -1,7 +1,7 @@
-import { product } from "@/utils/product";
 import ProductDetails from "./ProductDetails";
 import Container from "@/app/components/Container";
 import ListRating from "../ListRating";
+import { products } from "@/utils/products";
 
 //to navigate cart page just go /product/[productId]
 interface IParams {
@@ -10,6 +10,8 @@ interface IParams {
 
 const Product = ({params} : { params: IParams }) => {
     
+    const product = products.find((item) => item.id === params.productId);
+
     return ( 
         <div className="">
             <Container>
